@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <style>
+        :root {
+  --color-1: #e0e0e0;
+  --color-2: #f5f5f5;
+
+  --display-size: 40rem;
+  --display-height: 40rem;
+
+  --time-size: 65px;
+  --time-font-size: 38px;
+
+  --dot-font-size: calc(var(--time-font-size) - 20px);
+
+  --button-size: 30px;
+  --button-font-size: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background: var(--color-1);
+  background-image: url(time.jfif);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#head{
+        color: #002557;
+        font-size: 40px;
+        text-align: center;
+        margin-top: 30px;
+      }
+
+.container {
+  text-align: center;
+  padding: 10px;
+  border-radius: 25px;
+  background: var(--color-2);
+  box-shadow: 4px 4px 16px rgba(2, 4, 3, 0.5),
+    -4px -4px 16px rgba(245, 245, 245, 0.05);
+    
+}
+.container #display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-2);
+  box-shadow: inset 3px 3px 8px rgba(2, 4, 3, 0.5),
+    inset -5px -5px 10px rgba(245, 245, 245, 0.05);
+  width: var(--display-size);
+  border-radius: 15px;
+  padding: 8px;
+  text-shadow: 0 0 1px 1px rgba(2, 4, 3, 0.5);
+}
+.container #display .time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--time-font-size);
+  width: var(--time-size);
+  height: var(--time-size);
+  margin: 0 6px;
+}
+.container #display .dot {
+  font-size: var(--dot-font-size);
+}
+
+.container .buttons {
+  margin: 10px 0;
+}
+.buttons button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--button-font-size);
+  width: var(--button-size);
+  height: var(--button-size);
+  margin: 0 3px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #f0f0f0, var(--color-2));
+  box-shadow: 4px 4px 7px #acacac, -4px -4px 7px #ffffff;
+}
+
+    </style>
+</head>
+<body>
+    <section class="container">
+    <h1 id="head">STOP WATCH</h1>
+        <div id="display">
+          <span class="time_hour">00</span>
+          <p class="dot">:</p>
+          <span class="time_minute">00</span>
+          <p class="dot">:</p>
+          <span class="time_second">00</span>
+          <p class="dot">:</p>
+          <span class="time_millisecond">000</span>
+        </div>
+      
+        <div class="buttons">
+          <button id="play">
+            <i class="fa-solid fa-play icon"></i>
+          </button>
+          <button id="pause">
+            <i class="fa-solid fa-pause"></i>
+          </button>
+          <button id="reset">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+          </button>
+        </div>
+      </section>
+
+
+      <script>
+      let second = document.querySelector(".time_second");
+      let minute = document.querySelector(".time_minute");
+      let hours = document.querySelector(".time_hour");
+      let ms = document.querySelector(".time_millisecond");
+      let btn = document.querySelector("#reset");
+
+      let sec = 0,
+        min = 0,
+        hour = 0,
+        x = 0,
+        ms1 = 0;
+
+        btn.addEventListener("click", function () {
+        count = 0;
+        ms1 = 0;
+        sec = 0;
+        min = 0;
+        hour = 0;
+      });
+
+      document.querySelector("#pause").addEventListener("click", function () {
+        clearInterval(x);
+        count = 0;
+      });
+
+      let count = 0;
+      document.querySelector("#play").addEventListener("click", function () {
+        if (count === 0) {
+          x = setInterval(show, 11);
+        }
+        count++;
+    });
+
+    btn.addEventListener("click", function () {
+        count = 0;
+        second.innerHTML = "00";
+        minute.innerHTML = "00";
+        hours.innerHTML = "00";
+        ms.innerHTML = "00";
+      });
+
+      function show() {
+        ms1++;
+        second.innerHTML = ms1;
+        ms1 < 10 ? (ms.innerHTML = "0" + ms1) : (ms.innerHTML = ms1);
+
+        if (ms1 == 90) {
+          ms1 = 0;
+          sec++;
+        }
+
+        sec < 10 ? (second.innerHTML = "0" + sec) : (second.innerHTML = sec);
+        if (sec == 60) {
+          sec = 0;
+          min++;
+        }
+        min < 10 ? (minute.innerHTML = "0" + min) : (minute.innerHTML = min);
+
+        if (min == 60) {
+          min = 0;
+          hour++;
+        }
+        hour < 10 ? (hours.innerHTML = "0" + hour) : (hours.innerHTML = hour);
+      }
+
+      </script>
+</body>
+</html>
